@@ -36,6 +36,7 @@ from aiortc import (
 from aiortc.contrib.media import MediaBlackhole, MediaPlayer, MediaRecorder
 
 sio = socketio.AsyncClient(ssl_verify=False)
+pc = RTCPeerConnection()
 
 async def main():
     while 1:
@@ -89,8 +90,6 @@ async def main():
         recorder = MediaRecorder('default', format='alsa')
 
         # Create the PeerConnection and add the streams from the local Webcam.
-        global pc
-        pc = RTCPeerConnection()
         pc.addTrack(audio_player)
         pc.addTrack(video_player)
 
