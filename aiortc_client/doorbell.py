@@ -50,7 +50,7 @@ async def main():
 
         # Join a conference room with a random name
         # room_name =  uuid.uuid4()
-        room_name =  'success4'
+        room_name =  'success5'
         await sio.emit('join', room_name) # create a random room
         # Wait for response
         message = await asyncio.wait_for(queue.get(), timeout=10)
@@ -84,7 +84,7 @@ async def main():
         video_player = MediaPlayer('/dev/video0', format='v4l2', options={
             'video_size': '320x240'
         })
-        audio_player = MediaPlayer("default", format="pulse")
+        audio_player = MediaPlayer('default', format='pulse')
         # Prepare incoming stream
         global recorder
         recorder = MediaRecorder('default', format='alsa')
