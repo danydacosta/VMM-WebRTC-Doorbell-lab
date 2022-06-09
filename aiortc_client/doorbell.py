@@ -49,7 +49,7 @@ async def main():
 
         # Join a conference room with a random name
         # room_name =  uuid.uuid4()
-        room_name =  'success'
+        room_name =  'success3'
         await sio.emit('join', room_name) # create a random room
         # Wait for response
         message = await asyncio.wait_for(queue.get(), timeout=10)
@@ -91,7 +91,7 @@ async def main():
         # })
         # Create the PeerConnection and add the streams from the local Webcam.
         pc = RTCPeerConnection()
-        # pc.addTrack(audio_player)
+        pc.addTrack(audio_player)
         pc.addTrack(video_player)
 
         # Wait for the invite msg
