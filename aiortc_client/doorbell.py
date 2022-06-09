@@ -49,7 +49,7 @@ async def main():
 
         # Join a conference room with a random name
         # room_name =  uuid.uuid4()
-        room_name =  'success3'
+        room_name =  'success4'
         await sio.emit('join', room_name) # create a random room
         # Wait for response
         message = await asyncio.wait_for(queue.get(), timeout=10)
@@ -79,17 +79,17 @@ async def main():
             await sio.disconnect()
             break
 
-        # Acquire webcam
-        # linux
+        # Prepare outgoing streams
         video_player = MediaPlayer('/dev/video0', format='v4l2', options={
             'video_size': '320x240'
         })
         audio_player = MediaPlayer("default", format="pulse")
-        #video_player = MediaPlayer('video.mp4')
-        # video_player = MediaPlayer('default:none', format='avfoundation', options={
-        #     'video_size': '320x240'
-        # })
+        # Prepare incoming stream
+        global recorder
+        recorder = MediaRecorder('default', format='alsa')
+
         # Create the PeerConnection and add the streams from the local Webcam.
+        global pc
         pc = RTCPeerConnection()
         pc.addTrack(audio_player)
         pc.addTrack(video_player)
@@ -116,6 +116,11 @@ async def main():
 
 
         await sio.disconnect()
+
+@pc.on("track")
+def on_track(track):
+    print("Receiving %s" % track.kind)
+    recorder.addTrack(track)
 
 @sio.on('*')
 async def on_message(event, data):
