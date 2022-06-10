@@ -46,7 +46,7 @@ async def main():
         input() # Wait until keypress (to be replaced later by the pushbutton press event)
 
         # Connect to the signaling server
-        await sio.connect('https://10.192.94.122:443')
+        await sio.connect('https://localhost:443')
 
         # Join a conference room with a random name
         # room_name =  uuid.uuid4()
@@ -118,7 +118,7 @@ async def main():
 
 @pc.on("track")
 def on_track(track):
-    print("Receiving %s" % track.kind)
+    # print("Receiving %s" % track.kind)
     recorder.addTrack(track)
 
 @sio.on('*')
