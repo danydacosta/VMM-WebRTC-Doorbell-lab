@@ -78,14 +78,10 @@ function add_signaling_handlers(socket) {
     // Event handlers for call establishment signaling messages
     // --------------------------------------------------------
     // *** TODO ***: use the 'socket.on' method to create signaling message handlers:
-    // new_peer --> handle_new_peer
     // invite --> handle_invite
     // ok --> handle_ok
     // ice_candidate --> handle_remote_icecandidate
     // bye --> hangUp
-    socket.on('new_peer', (room) => {
-        handle_new_peer(room)
-    })
 
     socket.on('invite', (offer) => {
         handle_invite(offer)
@@ -152,10 +148,6 @@ function add_peerconnection_handlers(peerConnection) {
     peerConnection.ontrack = (event) => {
         handle_remote_track(event)
     }
-    // ondatachannel -> handle_remote_datachannel
-    peerConnection.ondatachannel = (event) => {
-        handle_remote_datachannel(event)
-    }
 }
 
 // ==========================================================================
@@ -166,21 +158,6 @@ function add_peerconnection_handlers(peerConnection) {
 async function handle_joined(socket) {
     const offer = await peerConnection.createOffer()
     await peerConnection.setLocalDescription(offer)
-}
-
-
-// --------------------------------------------------------------------------
-// Handle new peer: another peer has joined the room. I am the Caller.
-// Create SDP offer and send it to peer via the server.
-async function handle_new_peer(room) {
-    console.log('Peer has joined room: ' + room + '. I am the Caller.');
-
-    // *** TODO ***: use createOffer (with await) generate an SDP offer for peerConnection
-    const offer = await peerConnection.createOffer()
-    // *** TODO ***: use setLocalDescription (with await) to add the offer to peerConnection
-    await peerConnection.setLocalDescription(offer)
-    // *** TODO ***: send an 'invite' message with the offer to the peer.
-    //socket.emit('invite', offer);
 }
 
 // --------------------------------------------------------------------------
