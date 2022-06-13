@@ -107,13 +107,9 @@ async def main():
         # Add the SDP from the 'invite' to the peer connection.
         await pc.setRemoteDescription(RTCSessionDescription(data['sdp'], data['type']))
         # Generate the local session description (answer)
-        answer = await pc.createAnswer()
-        await pc.setLocalDescription(answer)
-        # Only this SDP will contain the ICE candidates!
-        response = pc.localDescription
+        await pc.setLocalDescription(await pc.createAnswer())
         # send it as 'ok' to the signaling server
-        await sio.emit('ok', response)
-
+        await sio.emit('ok', { 'sdp' : pc.localDescription.sdp, 'type' : pc.setLocalDescription.type })
 
         await sio.disconnect()
 
