@@ -106,7 +106,7 @@ async def main():
 
         print(data)
         # Add the SDP from the 'invite' to the peer connection.
-        await pc.setRemoteDescription(data)
+        await pc.setRemoteDescription(RTCSessionDescription(data))
         # Generate the local session description (answer)
         answer = pc.createAnswer()
         await pc.setLocalDescription(answer)
