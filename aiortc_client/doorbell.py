@@ -104,6 +104,7 @@ async def main():
             await sio.disconnect()
             break
 
+        print(data)
         # Add the SDP from the 'invite' to the peer connection.
         await pc.setRemoteDescription(data)
         # Generate the local session description (answer)
