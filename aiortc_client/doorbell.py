@@ -116,8 +116,6 @@ async def main():
         # send it as 'ok' to the signaling server
         await sio.emit('ok', { 'sdp' : pc.localDescription.sdp, 'type' : pc.localDescription.type })
 
-        await sio.disconnect()
-
 @pc.on("track")
 def on_track(track):
     # print("Receiving %s" % track.kind)
