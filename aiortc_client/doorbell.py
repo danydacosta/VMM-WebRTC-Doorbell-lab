@@ -26,6 +26,7 @@ import socketio
 import asyncio
 import aiohttp
 import uuid
+import logging
 
 from aiortc import (
     RTCIceCandidate,
@@ -39,6 +40,8 @@ sio = socketio.AsyncClient(ssl_verify=False)
 pc = RTCPeerConnection()
 
 async def main():
+    logging.basicConfig(level=logging.DEBUG)
+
     while 1:
         global queue 
         queue = asyncio.Queue()
@@ -105,17 +108,13 @@ async def main():
             break
 
         # Add the SDP from the 'invite' to the peer connection.
-        await pc.setRemoteDescription(RTCSessionDescription(data['sdp'], data['type']))
+        await pc.setRemoteDescription(RTCSessionDescription(sdp = data['sdp'], type = data['type']))
         # Generate the local session description (answer)
         answer = await pc.createAnswer()
+        print(answer)
         await pc.setLocalDescription(answer)
-        # Only this SDP will contain the ICE candidates!
-        response = pc.localDescription
         # send it as 'ok' to the signaling server
-        await sio.emit('ok', response)
-
-
-        await sio.disconnect()
+        await sio.emit('ok', { 'sdp' : pc.localDescription.sdp, 'type' : pc.localDescription.type })
 
 @pc.on("track")
 def on_track(track):
