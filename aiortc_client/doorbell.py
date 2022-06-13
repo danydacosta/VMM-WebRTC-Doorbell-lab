@@ -50,7 +50,7 @@ async def main():
 
         # Join a conference room with a random name
         # room_name =  uuid.uuid4()
-        room_name =  'success5'
+        room_name =  'test2'
         await sio.emit('join', room_name) # create a random room
         # Wait for response
         message = await asyncio.wait_for(queue.get(), timeout=10)
