@@ -110,8 +110,9 @@ async def main():
         # Add the SDP from the 'invite' to the peer connection.
         await pc.setRemoteDescription(RTCSessionDescription(data['sdp'], data['type']))
         # Generate the local session description (answer)
-        print(await pc.createAnswer())
-        await pc.setLocalDescription(await pc.createAnswer())
+        answer = await pc.createAnswer()
+        print(answer)
+        await pc.setLocalDescription(answer)
         # send it as 'ok' to the signaling server
         await sio.emit('ok', { 'sdp' : pc.localDescription.sdp, 'type' : pc.localDescription.type })
 
