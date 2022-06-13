@@ -26,6 +26,7 @@ import socketio
 import asyncio
 import aiohttp
 import uuid
+import logging
 
 from aiortc import (
     RTCIceCandidate,
@@ -39,6 +40,8 @@ sio = socketio.AsyncClient(ssl_verify=False)
 pc = RTCPeerConnection()
 
 async def main():
+    logging.basicConfig(level=logging.DEBUG)
+
     while 1:
         global queue 
         queue = asyncio.Queue()
