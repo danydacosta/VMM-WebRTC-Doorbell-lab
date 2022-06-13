@@ -109,7 +109,7 @@ async def main():
         # Generate the local session description (answer)
         answer = pc.createAnswer()
         print(answer)
-        await pc.setLocalDescription(answer)
+        await pc.setLocalDescription(RTCSessionDescription(answer.sdp, answer.type))
         # Only this SDP will contain the ICE candidates!
         response = pc.localDescription
         # send it as 'ok' to the signaling server
