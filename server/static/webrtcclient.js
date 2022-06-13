@@ -259,13 +259,10 @@ function hangUp() {
     // *** TODO ***: send a bye message with the room name to the server
     socket.emit('bye', room)
     // Switch off the local stream by stopping all tracks of the local stream
-    var localVideo = document.getElementById('localVideo')
     var remoteVideo = document.getElementById('remoteVideo')
     // *** TODO ***: remove the tracks from localVideo and remoteVideo
-    localVideo.srcObject.getTracks().forEach(track => track.stop())
     remoteVideo.srcObject.getTracks().forEach(track => track.stop())
     // *** TODO ***: set localVideo and remoteVideo source objects to null
-    localVideo = null
     remoteVideo = null
     // *** TODO ***: close the peerConnection and set it to null
     peerConnection.close()
