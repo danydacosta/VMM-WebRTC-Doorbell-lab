@@ -85,13 +85,14 @@ async def main():
             'video_size': '320x240'
         })
         audio_player = MediaPlayer('default', format='pulse')
+
         # Prepare incoming stream
         global recorder
         recorder = MediaRecorder('default', format='alsa')
 
         # Create the PeerConnection and add the streams from the local Webcam.
-        pc.addTrack(audio_player)
         pc.addTrack(video_player)
+        pc.addTrack(audio_player)
 
         # Wait for the invite msg
         message = await asyncio.wait_for(queue.get(), timeout=10)
