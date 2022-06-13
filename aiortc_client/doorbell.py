@@ -104,14 +104,14 @@ async def main():
             await sio.disconnect()
             break
 
-        print(data)
+        print(data['sdp'])
         # Add the SDP from the 'invite' to the peer connection.
         await pc.setRemoteDescription(data['sdp'])
         # Generate the local session description (answer)
         answer = pc.createAnswer()
         await pc.setLocalDescription(answer)
         # Only this SDP will contain the ICE candidates!
-        response = pc.localDescription()
+        response = pc.localDescription
         # send it as 'ok' to the signaling server
         await sio.emit('ok', response)
 
