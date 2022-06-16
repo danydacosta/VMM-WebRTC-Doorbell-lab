@@ -49,7 +49,7 @@ async def main():
         input() # Wait until keypress (to be replaced later by the pushbutton press event)
 
         # Connect to the signaling server
-        await sio.connect('https://10.192.94.60:443')
+        await sio.connect('https://10.192.105.14:443')
 
         # Join a conference room with a random name
         # room_name =  uuid.uuid4()
